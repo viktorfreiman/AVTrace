@@ -5,7 +5,7 @@ digraph G {
 
     UBIQ_USW_PRO_24 [label = <
         <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
-        <tr><td bgcolor="#FFD700" colspan="2"><font point-size="14"><b>UBIQ USW PRO 24</b></font></td></tr>
+        <tr><td bgcolor="#60A917" colspan="2"><font point-size="14"><b>UBIQ USW PRO 24</b></font></td></tr>
         <tr><td port="C13" colspan="2"><font point-size="10">C13</font></td></tr>
         <tr>
             <td port="rj45_1"><font point-size="10">1 RJ45</font></td>
@@ -77,7 +77,31 @@ digraph G {
         <tr><td port="hdmi" colspan="3"><font point-size="10">hdmi</font></td></tr>
         <tr><td port="ethernet" colspan="3"><font point-size="10">ethernet</font></td></tr>
         <tr><td port="displayport" colspan="3"><font point-size="10">displayport</font></td></tr>
-        <tr><td port="port_3_5mm_audio" colspan="3"><font point-size="10">3.5mm audio</font></td></tr>
+        <tr><td port="port_3_5mm_audio" colspan="3"><font point-size="10">OUT: 3.5mm audio</font></td></tr>
+        </table>
+        >;];
+
+    PP1_LAPTOP [label = <
+        <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
+        <tr><td bgcolor="#FFD700" colspan="2"><font point-size="14"><b>PP1 LAPTOP</b></font></td></tr>
+        <tr><td port="hdmi" colspan="2"><font point-size="10">OUT: hdmi</font></td></tr>
+        </table>
+        >;];
+
+    BIDI_SDI_HDMI_1 [label = <
+        <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
+        <tr><td bgcolor="#1BA1E2" colspan="2"><font point-size="14"><b>BIDI SDI HDMI_1</b></font></td></tr>
+        <tr><td port="sdi" colspan="2"><font point-size="10">IN: sdi</font></td></tr>
+        <tr><td port="hdmi" colspan="2"><font point-size="10">IN: hdmi</font></td></tr>
+        <tr><td port="sdi" colspan="2"><font point-size="10">OUT: sdi</font></td></tr>
+        <tr><td port="hdmi" colspan="2"><font point-size="10">OUT: hdmi</font></td></tr>
+        </table>
+        >;];
+
+    NYHEM_SARGE [label = <
+        <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
+        <tr><td bgcolor="#FFD700" colspan="2"><font point-size="14"><b>NYHEM SARGE</b></font></td></tr>
+        <tr><td port="sdi" colspan="2"><font point-size="10">IN: sdi</font></td></tr>
         </table>
         >;];
 
@@ -91,6 +115,7 @@ digraph G {
 
     // Connections
 
-    TOM_LAPTOP:usb_a -> STEAM_DECK:usb_a [label = "USB"; color = blue; penwidth = 2; fontname = "monospace";];
+    TOM_LAPTOP:usb_a -> STEAM_DECK:usb_a [label = "USB"; color = blue; penwidth = 2; fontname = "monospace"; dir = none;];
     TOM_LAPTOP:port_3_5mm_audio -> HEADPHONES:port_3_5mm_audio [label = "Audio"; color = red; penwidth = 2; fontname = "monospace";];
+    PP1_LAPTOP:hdmi -> BIDI_SDI_HDMI_1:hdmi [label = "HDMI"; color = darkgreen; penwidth = 2; fontname = "monospace";];
 }

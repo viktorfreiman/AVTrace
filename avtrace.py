@@ -66,13 +66,27 @@ def parse_connections(connection_string, devices):
                 label = "Connection"
                 color = "black"
             
+            # Determine if connection should have arrow (directional)
+            # port-x connections are bidirectional (no arrow)
+            # in-x to out-x connections are directional (with arrow)
+            is_bidirectional = False
+            
+            # Check if source port is a port-x (bidirectional)
+            if source_device in devices:
+                source_device_info = devices[source_device]
+                for key, value in source_device_info.items():
+                    if key.startswith('port-') and normalize_port_name(value) == source_port:
+                        is_bidirectional = True
+                        break
+            
             connections.append({
                 'source': source_device,
                 'source_port': source_port,
                 'target': target_device,
                 'target_port': target_port,
                 'label': label,
-                'color': color
+                'color': color,
+                'is_bidirectional': is_bidirectional
             })
             
             i += 3  # Skip the tokens we just processed
@@ -91,7 +105,7 @@ def get_max_cols(device_info):
             if 'x' in value:
                 # For "24x RJ45" format, we want 2 columns for the port table
                 return 2
-        elif key == 'out' and isinstance(value, str):
+        elif key.startswith('out-') and isinstance(value, str):
             # If output port name is long, increase columns
             if len(value) > 8:
                 max_cols = 3
@@ -123,6 +137,19 @@ def process_device_data(devices):
     
     return processed
 
+def get_device_color(device_info):
+    """Get device color based on type"""
+    device_type = device_info.get('type', 'pc')
+    
+    color_map = {
+        'pc': '#FFD700',      # Yellow (existing)
+        'network': '#60A917',  # Green
+        'converter': '#1BA1E2', # Blue
+        'venue': '#FFD700'     # Default to yellow for venue
+    }
+    
+    return color_map.get(device_type, '#FFD700')  # Default to yellow
+
 def main():
     # Load data
     dfile = Path(__file__).parent / "data.yaml"
@@ -141,6 +168,7 @@ def main():
     env = Environment(loader=FileSystemLoader('.'))
     env.globals['get_max_cols'] = get_max_cols
     env.globals['normalize_port_name'] = normalize_port_name
+    env.globals['get_device_color'] = get_device_color
     template = env.get_template('graphviz_template.j2')
     
     # Render the template

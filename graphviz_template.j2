@@ -5,12 +5,14 @@ digraph G {
 {% for device_id, device_info in devices.items() %}
     {{ device_id.upper().replace('-', '_') }} [label = <
         <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
-        <tr><td bgcolor="#FFD700" colspan="{{ get_max_cols(device_info) }}"><font point-size="14"><b>{{ device_id.upper().replace('-', ' ') }}</b></font></td></tr>
+        <tr><td bgcolor="{{ get_device_color(device_info) }}" colspan="{{ get_max_cols(device_info) }}"><font point-size="14"><b>{{ device_id.upper().replace('-', ' ') }}</b></font></td></tr>
         {%- if device_info.power and device_info.power != 'psu' %}
         <tr><td port="{{ normalize_port_name(device_info.power) }}" colspan="{{ get_max_cols(device_info) }}"><font point-size="10">{{ device_info.power }}</font></td></tr>
         {%- endif %}
         {%- for port_key, port_value in device_info.items() %}
-            {%- if port_key.startswith('port-') %}
+            {%- if port_key.startswith('in-') %}
+        <tr><td port="{{ normalize_port_name(port_value) }}" colspan="{{ get_max_cols(device_info) }}"><font point-size="10">IN: {{ port_value }}</font></td></tr>
+            {%- elif port_key.startswith('port-') %}
                 {%- if 'x' in port_value %}
                     {%- set count, port_type = port_value.split('x') %}
                     {%- set count = count | int %}
@@ -33,15 +35,17 @@ digraph G {
                 {%- endif %}
             {%- endif %}
         {%- endfor %}
-        {%- if device_info.out %}
-        <tr><td port="{{ normalize_port_name(device_info.out) }}" colspan="{{ get_max_cols(device_info) }}"><font point-size="10">{{ device_info.out }}</font></td></tr>
-        {%- endif %}
+        {%- for port_key, port_value in device_info.items() %}
+            {%- if port_key.startswith('out-') %}
+        <tr><td port="{{ normalize_port_name(port_value) }}" colspan="{{ get_max_cols(device_info) }}"><font point-size="10">OUT: {{ port_value }}</font></td></tr>
+            {%- endif %}
+        {%- endfor %}
         </table>
         >;];
 {% endfor %}
 
     // Connections
 {% for connection in connections %}
-    {{ connection.source.upper().replace('-', '_') }}{% if connection.source_port %}:{{ connection.source_port }}{% endif %} -> {{ connection.target.upper().replace('-', '_') }}{% if connection.target_port %}:{{ connection.target_port }}{% endif %} [label = "{{ connection.label }}"; color = {{ connection.color }}; penwidth = 2; fontname = "monospace";];
+    {{ connection.source.upper().replace('-', '_') }}{% if connection.source_port %}:{{ connection.source_port }}{% endif %} -> {{ connection.target.upper().replace('-', '_') }}{% if connection.target_port %}:{{ connection.target_port }}{% endif %} [label = "{{ connection.label }}"; color = {{ connection.color }}; penwidth = 2; fontname = "monospace";{% if connection.is_bidirectional %} dir = none;{% endif %}];
 {%- endfor %}
 }

@@ -1,16 +1,21 @@
+# psu is placeholder and does not connect to anything
+# power is the required connection to make the device work
+# port is bi-directional
+# always make port to port-1
+
 ubiq-usw-pro-24:
+ - type: network
  - name: Ubiquiti Pro 24
  - power: C13
  - port-1: 24x RJ45
  - port-2: 2x SFP+
 
-# port is bi-directional
-# always make port to port-1
-
 steam-deck:
+ - type: pc
  - power: usb-a
 
 tom-laptop:
+  - type: pc
   - loc: /foh/
   - power: psu
   - port-1: usb-a
@@ -18,15 +23,29 @@ tom-laptop:
   - port-3: hdmi
   - port-4: ethernet
   - port-5: displayport
-  - out: 3.5mm audio
+  - out-1: 3.5mm audio
+
+pp1-laptop:
+  - type: pc
+  - power: psu
+  - out-1: hdmi
+
+bidi-sdi-hdmi_1:
+  - type: converter
+  - power: psu
+  - in-1: sdi
+  - in-2: hdmi
+  - out-1: sdi
+  - out-2: hdmi
+
+nyhem-sarge:
+  - type: venue
+  - in-1: sdi
 
 headphones:
   - power: 3.5mm audio
 
-
-# psu is placeholder and does not connect to anything
-# power is the required connection to make the device work
-
 connection: >
   tom-laptop:usb-a -> steam-deck
   tom-laptop:port_3_5mm_audio -> headphones
+  pp1-laptop:hdmi -> bidi-sdi-hdmi_1:hdmi
