@@ -1,0 +1,53 @@
+digraph G {
+    rankdir = LR;
+    node [shape = plaintext; fontname = "Helvetica";];
+    
+    // Grouped area for laptops with dashed border and background
+    subgraph cluster_laptops {
+        label = "Laptops";
+        style = "dashed,filled";
+        // Both background and dashed border
+        color = "#DAA520";
+        // Border color
+        fillcolor = "#FFFACD";
+        // Background color (light yellow)
+        penwidth = 3;
+        // Thicker dashes
+        fontname = "monospace";
+        fontsize = 14;
+        
+        TOM_LAPTOP [label = <
+            <table border="1" cellborder="1" cellspacing="0">
+            <tr><td bgcolor="#FFD700" colspan="2"><font face="monospace"><b>TOM LAPTOP</b></font></td></tr>
+            <tr><td>Schuko</td><td>ETH</td></tr>
+            <tr><td port="usb_a" colspan="2">USB A</td></tr>
+            </table>
+            >;];
+        
+        PP1_LAPTOP [label = <
+            <table border="1" cellborder="1" cellspacing="0">
+            <tr><td bgcolor="#FFD700" colspan="2"><font face="monospace"><b>PP1 (LAPTOP)<br/>LED WALL</b></font></td></tr>
+            <tr><td>Schuko</td><td>ETH</td></tr>
+            <tr><td port="hdmi" colspan="2">HDMI</td></tr>
+            </table>
+            >;];
+    }
+    
+    // NOVASTAR (Output device)
+    NOVASTAR [label = <
+        <table border="1" cellborder="1" cellspacing="0">
+        <tr><td bgcolor="#FF69B4" colspan="2"><font face="monospace"><b>NOVASTAR<br/>MCTRL600</b></font></td></tr>
+        <tr><td port="c13" colspan="2">C13</td></tr>
+        <tr><td port="usb_b" colspan="2">USB B</td></tr>
+        <tr><td port="hdmi">HDMI</td><td port="rj45">RJ45</td></tr>
+        </table>
+        >;];
+    
+    // RJ45 Output Line
+    RJ45_LINE [shape = diamond;label = "RJ45 100M";];
+    
+    // Connections
+    TOM_LAPTOP:usb_a -> NOVASTAR:usb_b [label = "USB"; color = blue; penwidth = 2;];
+    PP1_LAPTOP:hdmi -> NOVASTAR:hdmi [label = "HDMI"; color = darkgreen; penwidth = 2;];
+    NOVASTAR:rj45 -> RJ45_LINE [arrowhead = none; color = black; penwidth = 2;];
+}

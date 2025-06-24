@@ -1,0 +1,34 @@
+ubiq-usw-pro-24:
+ - name: Ubiquiti Pro 24
+ - power: C13
+ - port-1: 24x RJ45
+ - port-2: 2x SFP+
+
+# port is bi-directional
+# always make port to port-1
+
+steam-deck:
+ - power: PREM usb-a
+# PERM is that the cable is permanently connected and don't count to cable calculation
+
+tom-laptop:
+  - loc: /foh/
+  - power: psu
+  - port-1: usb-a
+  - port-2: usb-c
+  - port-3: hdmi
+  - port-4: ethernet
+  - port-5: displayport
+  - out: 3.5mm audio
+
+headphones:
+  - power: 3.5mm audio
+
+
+# psu is placeholder and does not connect to anything
+# power is the required connection to make the device work
+
+connection: >
+  tom-laptop:usb-a -> steam-deck
+  tom-laptop -> headphones
+  tom-laptop -> steam-deck

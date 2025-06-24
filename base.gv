@@ -1,0 +1,34 @@
+digraph G {
+    rankdir = LR;
+    node [shape = plaintext; fontname = "monospace";];
+
+    tom_laptop [label = <
+        <table border="1" cellborder="1" cellspacing="0">
+        <tr><td bgcolor="#FFD700" colspan="2"><b>TOM LAPTOP</b></td></tr>
+        <tr><td>Schuko</td><td>ETH</td></tr>
+        <tr><td port="usb_a" colspan="2">USB A</td></tr>
+        </table>
+        >;];
+    
+    pp1_laptop [label = <
+        <table border="1" cellborder="1" cellspacing="0">
+        <tr><td bgcolor="#FFD700" colspan="2"><b>PP1 (LAPTOP)<br/>LED WALL</b></td></tr>
+        <tr><td>Schuko</td><td>ETH</td></tr>
+        <tr><td port="hdmi" colspan="2">HDMI</td></tr>
+        </table>
+        >;];
+    
+    
+    novastar [label = <
+        <table border="1" cellborder="1" cellspacing="0">
+        <tr><td bgcolor="#FF69B4" colspan="2"><b>NOVASTAR<br/>MCTRL600</b></td></tr>
+        <tr><td port="c13" colspan="2">C13</td></tr>
+        <tr><td port="usb_b" colspan="2">USB B</td></tr>
+        <tr><td port="hdmi">HDMI</td><td port="rj45">RJ45</td></tr>
+        </table>
+        >;];
+    
+    // Connections
+    tom_laptop:usb_a -> novastar:usb_b [label = "USB"; color = blue; penwidth = 2;];
+    pp1_laptop -> novastar [label = "HDMI"; color = darkgreen; penwidth = 2;];
+}
