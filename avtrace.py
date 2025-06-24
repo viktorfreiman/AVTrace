@@ -29,6 +29,9 @@ def parse_connections(connection_string, devices):
             if ':' in source_part:
                 source_device, source_port = source_part.split(':', 1)
                 source_port = normalize_port_name(source_port)
+                # Resolve to actual port name with prefix (is_source=True)
+                if source_device in devices:
+                    source_port = resolve_port_name(devices[source_device], source_port, is_source=True)
             else:
                 source_device = source_part
                 source_port = None
@@ -37,6 +40,9 @@ def parse_connections(connection_string, devices):
             if ':' in target_part:
                 target_device, target_port = target_part.split(':', 1)
                 target_port = normalize_port_name(target_port)
+                # Resolve to actual port name with prefix (is_source=False)
+                if target_device in devices:
+                    target_port = resolve_port_name(devices[target_device], target_port, is_source=False)
             else:
                 target_device = target_part
                 target_port = None
@@ -48,22 +54,35 @@ def parse_connections(connection_string, devices):
                         # Use the power connection as the target port
                         power_port = normalize_port_name(target_device_info['power'])
                         target_port = power_port
+                    else:
+                        # If no power port, try to find the first input port
+                        for key, value in target_device_info.items():
+                            if key.startswith('in-'):
+                                target_port = f"in_{normalize_port_name(value)}"
+                                break
                 
             # Determine connection type and color
             if source_port and 'usb' in source_port.lower():
                 label = "USB"
-                color = "blue"
+                color = "#0074D9"
+            elif source_port and 'sdi' in source_port.lower():
+                label = "SDI"
+                color = "#00FF00"
             elif source_port and 'hdmi' in source_port.lower():
                 label = "HDMI"
-                color = "darkgreen"
-            elif source_port and 'ethernet' in source_port.lower():
-                label = "Ethernet"
-                color = "orange"
+                color = "#8E44AD"
+            elif source_port and 'eth' in source_port.lower():
+                label = "ETH"
+                color = "#E67E22"
+            elif source_port and 'rj45' in source_port.lower():
+                label = "RJ45"
+                color = "#4D4D4D"
             elif target_device == 'headphones' or (target_port and 'audio' in target_port.lower()):
                 label = "Audio"
-                color = "red"
+                color = "#A21E7D"
             else:
-                label = "Connection"
+                # label = "Connection"
+                label = ""
                 color = "black"
             
             # Determine if connection should have arrow (directional)
@@ -145,10 +164,42 @@ def get_device_color(device_info):
         'pc': '#FFD700',      # Yellow (existing)
         'network': '#60A917',  # Green
         'converter': '#1BA1E2', # Blue
-        'venue': '#FFD700'     # Default to yellow for venue
+        'venue': "#AFAA8B"     # Default to yellow for venue
     }
     
     return color_map.get(device_type, '#FFD700')  # Default to yellow
+
+def resolve_port_name(device_info, port_name, is_source=True):
+    """Resolve a port name to its actual port identifier in the device"""
+    if not port_name:
+        return None
+    
+    # For sources (left side of ->), prefer output ports
+    # For targets (right side of ->), prefer input ports
+    
+    if is_source:
+        # Check output ports first for source connections
+        for key, value in device_info.items():
+            if key.startswith('out-') and normalize_port_name(value) == port_name:
+                return f"out_{normalize_port_name(value)}"
+        
+        # Then check input ports
+        for key, value in device_info.items():
+            if key.startswith('in-') and normalize_port_name(value) == port_name:
+                return f"in_{normalize_port_name(value)}"
+    else:
+        # Check input ports first for target connections
+        for key, value in device_info.items():
+            if key.startswith('in-') and normalize_port_name(value) == port_name:
+                return f"in_{normalize_port_name(value)}"
+        
+        # Then check output ports
+        for key, value in device_info.items():
+            if key.startswith('out-') and normalize_port_name(value) == port_name:
+                return f"out_{normalize_port_name(value)}"
+    
+    # For regular ports and power ports, return as-is
+    return port_name
 
 def main():
     # Load data

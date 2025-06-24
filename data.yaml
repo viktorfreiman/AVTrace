@@ -7,12 +7,12 @@ ubiq-usw-pro-24:
  - type: network
  - name: Ubiquiti Pro 24
  - power: C13
- - port-1: 24x RJ45
+ - port-1: 24x ETH
  - port-2: 2x SFP+
 
 steam-deck:
  - type: pc
- - power: usb-a
+ - in-1: usb-a
 
 tom-laptop:
   - type: pc
@@ -21,14 +21,16 @@ tom-laptop:
   - port-1: usb-a
   - port-2: usb-c
   - port-3: hdmi
-  - port-4: ethernet
+  - port-4: eth
   - port-5: displayport
   - out-1: 3.5mm audio
 
 pp1-laptop:
   - type: pc
   - power: psu
+  - port-1: eth
   - out-1: hdmi
+  - out-2: usb-a
 
 bidi-sdi-hdmi_1:
   - type: converter
@@ -38,14 +40,34 @@ bidi-sdi-hdmi_1:
   - out-1: sdi
   - out-2: hdmi
 
+dante-usb:
+  - type: converter
+  - in-1: usb-a
+  - out-1: RJ45
+
+poe-injector_1:
+  - type: converter
+  - in-1: RJ45
+  - out-2: RJ45
+
+gs105:
+  - type: network
+  - port-1: 5x RJ45
+
 nyhem-sarge:
   - type: venue
   - in-1: sdi
 
 headphones:
-  - power: 3.5mm audio
+  - in-1: 3.5mm audio
 
 connection: >
   tom-laptop:usb-a -> steam-deck
   tom-laptop:port_3_5mm_audio -> headphones
   pp1-laptop:hdmi -> bidi-sdi-hdmi_1:hdmi
+  bidi-sdi-hdmi_1:sdi -> nyhem-sarge:sdi
+  ubiq-usw-pro-24:eth -> tom-laptop:eth
+  ubiq-usw-pro-24:eth -> pp1-laptop:eth
+  pp1-laptop:usb-a -> dante-usb:usb-a
+  dante-usb:RJ45 -> poe-injector_1:RJ45
+  poe-injector_1:RJ45 -> gs105:RJ45

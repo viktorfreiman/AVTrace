@@ -3,10 +3,149 @@ digraph G {
     node [shape = plaintext; fontname = "monospace";];
 
 
+    
     UBIQ_USW_PRO_24 [label = <
         <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
         <tr><td bgcolor="#60A917" colspan="2"><font point-size="14"><b>UBIQ USW PRO 24</b></font></td></tr>
-        <tr><td port="C13" colspan="2"><font point-size="10">C13</font></td></tr>
+        <tr>
+            <td port="eth_1"><font point-size="10">1 ETH</font></td>
+            <td port="eth_2"><font point-size="10">2 ETH</font></td>
+        </tr>
+        <tr>
+            <td port="eth_3"><font point-size="10">3 ETH</font></td>
+            <td port="eth_4"><font point-size="10">4 ETH</font></td>
+        </tr>
+        <tr>
+            <td port="eth_5"><font point-size="10">5 ETH</font></td>
+            <td port="eth_6"><font point-size="10">6 ETH</font></td>
+        </tr>
+        <tr>
+            <td port="eth_7"><font point-size="10">7 ETH</font></td>
+            <td port="eth_8"><font point-size="10">8 ETH</font></td>
+        </tr>
+        <tr>
+            <td port="eth_9"><font point-size="10">9 ETH</font></td>
+            <td port="eth_10"><font point-size="10">10 ETH</font></td>
+        </tr>
+        <tr>
+            <td port="eth_11"><font point-size="10">11 ETH</font></td>
+            <td port="eth_12"><font point-size="10">12 ETH</font></td>
+        </tr>
+        <tr>
+            <td port="eth_13"><font point-size="10">13 ETH</font></td>
+            <td port="eth_14"><font point-size="10">14 ETH</font></td>
+        </tr>
+        <tr>
+            <td port="eth_15"><font point-size="10">15 ETH</font></td>
+            <td port="eth_16"><font point-size="10">16 ETH</font></td>
+        </tr>
+        <tr>
+            <td port="eth_17"><font point-size="10">17 ETH</font></td>
+            <td port="eth_18"><font point-size="10">18 ETH</font></td>
+        </tr>
+        <tr>
+            <td port="eth_19"><font point-size="10">19 ETH</font></td>
+            <td port="eth_20"><font point-size="10">20 ETH</font></td>
+        </tr>
+        <tr>
+            <td port="eth_21"><font point-size="10">21 ETH</font></td>
+            <td port="eth_22"><font point-size="10">22 ETH</font></td>
+        </tr>
+        <tr>
+            <td port="eth_23"><font point-size="10">23 ETH</font></td>
+            <td port="eth_24"><font point-size="10">24 ETH</font></td>
+        </tr>
+        <tr>
+            <td port="sfp+_1"><font point-size="10">1 SFP+</font></td>
+            <td port="sfp+_2"><font point-size="10">2 SFP+</font></td>
+        </tr>
+        </table>
+        >;];
+
+    
+    STEAM_DECK [label = <
+        <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
+        <tr><td bgcolor="#FFD700" colspan="2"><font point-size="14"><b>STEAM DECK</b></font></td></tr>
+        <tr>
+            <td port="in_usb_a"><font point-size="10">IN: usb-a</font></td>
+            <td></td>
+        </tr>
+        </table>
+        >;];
+
+    
+    TOM_LAPTOP [label = <
+        <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
+        <tr><td bgcolor="#FFD700" colspan="2"><font point-size="14"><b>TOM LAPTOP</b></font></td></tr>
+        <tr>
+            <td></td>
+            <td port="out_port_3_5mm_audio"><font point-size="10">OUT: 3.5mm audio</font></td>
+        </tr>
+        <tr><td port="usb_a" colspan="2"><font point-size="10">usb-a</font></td></tr>
+        <tr><td port="usb_c" colspan="2"><font point-size="10">usb-c</font></td></tr>
+        <tr><td port="hdmi" colspan="2"><font point-size="10">hdmi</font></td></tr>
+        <tr><td port="eth" colspan="2"><font point-size="10">eth</font></td></tr>
+        <tr><td port="displayport" colspan="2"><font point-size="10">displayport</font></td></tr>
+        </table>
+        >;];
+
+    
+    PP1_LAPTOP [label = <
+        <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
+        <tr><td bgcolor="#FFD700" colspan="2"><font point-size="14"><b>PP1 LAPTOP</b></font></td></tr>
+        <tr>
+            <td></td>
+            <td port="out_hdmi"><font point-size="10">OUT: hdmi</font></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td port="out_usb_a"><font point-size="10">OUT: usb-a</font></td>
+        </tr>
+        <tr><td port="eth" colspan="2"><font point-size="10">eth</font></td></tr>
+        </table>
+        >;];
+
+    
+    BIDI_SDI_HDMI_1 [label = <
+        <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
+        <tr><td bgcolor="#1BA1E2" colspan="2"><font point-size="14"><b>BIDI SDI HDMI_1</b></font></td></tr>
+        <tr>
+            <td port="in_sdi"><font point-size="10">IN: sdi</font></td>
+            <td port="out_sdi"><font point-size="10">OUT: sdi</font></td>
+        </tr>
+        <tr>
+            <td port="in_hdmi"><font point-size="10">IN: hdmi</font></td>
+            <td port="out_hdmi"><font point-size="10">OUT: hdmi</font></td>
+        </tr>
+        </table>
+        >;];
+
+    
+    DANTE_USB [label = <
+        <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
+        <tr><td bgcolor="#1BA1E2" colspan="2"><font point-size="14"><b>DANTE USB</b></font></td></tr>
+        <tr>
+            <td port="in_usb_a"><font point-size="10">IN: usb-a</font></td>
+            <td port="out_RJ45"><font point-size="10">OUT: RJ45</font></td>
+        </tr>
+        </table>
+        >;];
+
+    
+    POE_INJECTOR_1 [label = <
+        <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
+        <tr><td bgcolor="#1BA1E2" colspan="2"><font point-size="14"><b>POE INJECTOR_1</b></font></td></tr>
+        <tr>
+            <td port="in_RJ45"><font point-size="10">IN: RJ45</font></td>
+            <td port="out_RJ45"><font point-size="10">OUT: RJ45</font></td>
+        </tr>
+        </table>
+        >;];
+
+    
+    GS105 [label = <
+        <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
+        <tr><td bgcolor="#60A917" colspan="2"><font point-size="14"><b>GS105</b></font></td></tr>
         <tr>
             <td port="rj45_1"><font point-size="10">1 RJ45</font></td>
             <td port="rj45_2"><font point-size="10">2 RJ45</font></td>
@@ -17,105 +156,43 @@ digraph G {
         </tr>
         <tr>
             <td port="rj45_5"><font point-size="10">5 RJ45</font></td>
-            <td port="rj45_6"><font point-size="10">6 RJ45</font></td>
-        </tr>
-        <tr>
-            <td port="rj45_7"><font point-size="10">7 RJ45</font></td>
-            <td port="rj45_8"><font point-size="10">8 RJ45</font></td>
-        </tr>
-        <tr>
-            <td port="rj45_9"><font point-size="10">9 RJ45</font></td>
-            <td port="rj45_10"><font point-size="10">10 RJ45</font></td>
-        </tr>
-        <tr>
-            <td port="rj45_11"><font point-size="10">11 RJ45</font></td>
-            <td port="rj45_12"><font point-size="10">12 RJ45</font></td>
-        </tr>
-        <tr>
-            <td port="rj45_13"><font point-size="10">13 RJ45</font></td>
-            <td port="rj45_14"><font point-size="10">14 RJ45</font></td>
-        </tr>
-        <tr>
-            <td port="rj45_15"><font point-size="10">15 RJ45</font></td>
-            <td port="rj45_16"><font point-size="10">16 RJ45</font></td>
-        </tr>
-        <tr>
-            <td port="rj45_17"><font point-size="10">17 RJ45</font></td>
-            <td port="rj45_18"><font point-size="10">18 RJ45</font></td>
-        </tr>
-        <tr>
-            <td port="rj45_19"><font point-size="10">19 RJ45</font></td>
-            <td port="rj45_20"><font point-size="10">20 RJ45</font></td>
-        </tr>
-        <tr>
-            <td port="rj45_21"><font point-size="10">21 RJ45</font></td>
-            <td port="rj45_22"><font point-size="10">22 RJ45</font></td>
-        </tr>
-        <tr>
-            <td port="rj45_23"><font point-size="10">23 RJ45</font></td>
-            <td port="rj45_24"><font point-size="10">24 RJ45</font></td>
-        </tr>
-        <tr>
-            <td port="sfp+_1"><font point-size="10">1 SFP+</font></td>
-            <td port="sfp+_2"><font point-size="10">2 SFP+</font></td>
+            <td></td>
         </tr>
         </table>
         >;];
 
-    STEAM_DECK [label = <
-        <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
-        <tr><td bgcolor="#FFD700" colspan="2"><font point-size="14"><b>STEAM DECK</b></font></td></tr>
-        <tr><td port="usb_a" colspan="2"><font point-size="10">usb-a</font></td></tr>
-        </table>
-        >;];
-
-    TOM_LAPTOP [label = <
-        <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
-        <tr><td bgcolor="#FFD700" colspan="3"><font point-size="14"><b>TOM LAPTOP</b></font></td></tr>
-        <tr><td port="usb_a" colspan="3"><font point-size="10">usb-a</font></td></tr>
-        <tr><td port="usb_c" colspan="3"><font point-size="10">usb-c</font></td></tr>
-        <tr><td port="hdmi" colspan="3"><font point-size="10">hdmi</font></td></tr>
-        <tr><td port="ethernet" colspan="3"><font point-size="10">ethernet</font></td></tr>
-        <tr><td port="displayport" colspan="3"><font point-size="10">displayport</font></td></tr>
-        <tr><td port="port_3_5mm_audio" colspan="3"><font point-size="10">OUT: 3.5mm audio</font></td></tr>
-        </table>
-        >;];
-
-    PP1_LAPTOP [label = <
-        <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
-        <tr><td bgcolor="#FFD700" colspan="2"><font point-size="14"><b>PP1 LAPTOP</b></font></td></tr>
-        <tr><td port="hdmi" colspan="2"><font point-size="10">OUT: hdmi</font></td></tr>
-        </table>
-        >;];
-
-    BIDI_SDI_HDMI_1 [label = <
-        <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
-        <tr><td bgcolor="#1BA1E2" colspan="2"><font point-size="14"><b>BIDI SDI HDMI_1</b></font></td></tr>
-        <tr><td port="sdi" colspan="2"><font point-size="10">IN: sdi</font></td></tr>
-        <tr><td port="hdmi" colspan="2"><font point-size="10">IN: hdmi</font></td></tr>
-        <tr><td port="sdi" colspan="2"><font point-size="10">OUT: sdi</font></td></tr>
-        <tr><td port="hdmi" colspan="2"><font point-size="10">OUT: hdmi</font></td></tr>
-        </table>
-        >;];
-
+    
     NYHEM_SARGE [label = <
         <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
-        <tr><td bgcolor="#FFD700" colspan="2"><font point-size="14"><b>NYHEM SARGE</b></font></td></tr>
-        <tr><td port="sdi" colspan="2"><font point-size="10">IN: sdi</font></td></tr>
+        <tr><td bgcolor="#AFAA8B" colspan="2"><font point-size="14"><b>NYHEM SARGE</b></font></td></tr>
+        <tr>
+            <td port="in_sdi"><font point-size="10">IN: sdi</font></td>
+            <td></td>
+        </tr>
         </table>
         >;];
 
+    
     HEADPHONES [label = <
         <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
-        <tr><td bgcolor="#FFD700" colspan="3"><font point-size="14"><b>HEADPHONES</b></font></td></tr>
-        <tr><td port="port_3_5mm_audio" colspan="3"><font point-size="10">3.5mm audio</font></td></tr>
+        <tr><td bgcolor="#FFD700" colspan="2"><font point-size="14"><b>HEADPHONES</b></font></td></tr>
+        <tr>
+            <td port="in_port_3_5mm_audio"><font point-size="10">IN: 3.5mm audio</font></td>
+            <td></td>
+        </tr>
         </table>
         >;];
 
 
     // Connections
 
-    TOM_LAPTOP:usb_a -> STEAM_DECK:usb_a [label = "USB"; color = blue; penwidth = 2; fontname = "monospace"; dir = none;];
-    TOM_LAPTOP:port_3_5mm_audio -> HEADPHONES:port_3_5mm_audio [label = "Audio"; color = red; penwidth = 2; fontname = "monospace";];
-    PP1_LAPTOP:hdmi -> BIDI_SDI_HDMI_1:hdmi [label = "HDMI"; color = darkgreen; penwidth = 2; fontname = "monospace";];
+    TOM_LAPTOP:usb_a -> STEAM_DECK:in_usb_a [label = "USB"; color = "#0074D9"; penwidth = 2; fontname = "monospace"; dir = none;];
+    TOM_LAPTOP:out_port_3_5mm_audio -> HEADPHONES:in_port_3_5mm_audio [label = "Audio"; color = "#A21E7D"; penwidth = 2; fontname = "monospace";];
+    PP1_LAPTOP:out_hdmi -> BIDI_SDI_HDMI_1:in_hdmi [label = "HDMI"; color = "#8E44AD"; penwidth = 2; fontname = "monospace";];
+    BIDI_SDI_HDMI_1:out_sdi -> NYHEM_SARGE:in_sdi [label = "SDI"; color = "#00FF00"; penwidth = 2; fontname = "monospace";];
+    UBIQ_USW_PRO_24:eth -> TOM_LAPTOP:eth [label = "ETH"; color = "#E67E22"; penwidth = 2; fontname = "monospace";];
+    UBIQ_USW_PRO_24:eth -> PP1_LAPTOP:eth [label = "ETH"; color = "#E67E22"; penwidth = 2; fontname = "monospace";];
+    PP1_LAPTOP:out_usb_a -> DANTE_USB:in_usb_a [label = "USB"; color = "#0074D9"; penwidth = 2; fontname = "monospace";];
+    DANTE_USB:out_RJ45 -> POE_INJECTOR_1:in_RJ45 [label = "RJ45"; color = "#4D4D4D"; penwidth = 2; fontname = "monospace";];
+    POE_INJECTOR_1:out_RJ45 -> GS105:RJ45 [label = "RJ45"; color = "#4D4D4D"; penwidth = 2; fontname = "monospace";];
 }

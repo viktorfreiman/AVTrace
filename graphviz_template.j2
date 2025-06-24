@@ -3,41 +3,68 @@ digraph G {
     node [shape = plaintext; fontname = "monospace";];
 
 {% for device_id, device_info in devices.items() %}
+    {%- set input_ports = [] %}
+    {%- set output_ports = [] %}
+    {%- set regular_ports = [] %}
+    {%- set power_port = none %}
+    
+    {%- for port_key, port_value in device_info.items() %}
+        {%- if port_key.startswith('in-') %}
+            {%- set _ = input_ports.append(port_value) %}
+        {%- elif port_key.startswith('out-') %}
+            {%- set _ = output_ports.append(port_value) %}
+        {%- elif port_key.startswith('port-') %}
+            {%- set _ = regular_ports.append((port_key, port_value)) %}
+        {%- elif port_key == 'power' %}
+            {%- set power_port = port_value %}
+        {%- endif %}
+    {%- endfor %}
+    
     {{ device_id.upper().replace('-', '_') }} [label = <
         <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
-        <tr><td bgcolor="{{ get_device_color(device_info) }}" colspan="{{ get_max_cols(device_info) }}"><font point-size="14"><b>{{ device_id.upper().replace('-', ' ') }}</b></font></td></tr>
-        {%- if device_info.power and device_info.power != 'psu' %}
-        <tr><td port="{{ normalize_port_name(device_info.power) }}" colspan="{{ get_max_cols(device_info) }}"><font point-size="10">{{ device_info.power }}</font></td></tr>
+        <tr><td bgcolor="{{ get_device_color(device_info) }}" colspan="2"><font point-size="14"><b>{{ device_id.upper().replace('-', ' ') }}</b></font></td></tr>
+        {%- if power_port and power_port != 'psu' %}
+        <tr><td port="{{ normalize_port_name(power_port) }}" colspan="2"><font point-size="10">{{ power_port }}</font></td></tr>
         {%- endif %}
-        {%- for port_key, port_value in device_info.items() %}
-            {%- if port_key.startswith('in-') %}
-        <tr><td port="{{ normalize_port_name(port_value) }}" colspan="{{ get_max_cols(device_info) }}"><font point-size="10">IN: {{ port_value }}</font></td></tr>
-            {%- elif port_key.startswith('port-') %}
-                {%- if 'x' in port_value %}
-                    {%- set count, port_type = port_value.split('x') %}
-                    {%- set count = count | int %}
-                    {%- set port_type = port_type.strip() %}
-                    {%- set cols = 2 %}
-                    {%- for i in range(0, count, cols) %}
+        
+        {%- if input_ports or output_ports %}
+            {%- set max_ports = [input_ports|length, output_ports|length]|max %}
+            {%- for i in range(max_ports) %}
         <tr>
-                        {%- for j in range(cols) %}
-                            {%- set port_num = i + j + 1 %}
-                            {%- if port_num <= count %}
-            <td port="{{ port_type.lower().replace(' ', '').replace('-', '') }}_{{ port_num }}"><font point-size="10">{{ port_num }} {{ port_type.upper() }}</font></td>
-                            {%- else %}
-            <td></td>
-                            {%- endif %}
-                        {%- endfor %}
-        </tr>
-                    {%- endfor %}
+                {%- if i < input_ports|length %}
+            <td port="in_{{ normalize_port_name(input_ports[i]) }}"><font point-size="10">IN: {{ input_ports[i] }}</font></td>
                 {%- else %}
-        <tr><td port="{{ normalize_port_name(port_value) }}" colspan="{{ get_max_cols(device_info) }}"><font point-size="10">{{ port_value }}</font></td></tr>
+            <td></td>
                 {%- endif %}
-            {%- endif %}
-        {%- endfor %}
-        {%- for port_key, port_value in device_info.items() %}
-            {%- if port_key.startswith('out-') %}
-        <tr><td port="{{ normalize_port_name(port_value) }}" colspan="{{ get_max_cols(device_info) }}"><font point-size="10">OUT: {{ port_value }}</font></td></tr>
+                {%- if i < output_ports|length %}
+            <td port="out_{{ normalize_port_name(output_ports[i]) }}"><font point-size="10">OUT: {{ output_ports[i] }}</font></td>
+                {%- else %}
+            <td></td>
+                {%- endif %}
+        </tr>
+            {%- endfor %}
+        {%- endif %}
+        
+        {%- for port_key, port_value in regular_ports %}
+            {%- if 'x' in port_value %}
+                {%- set count, port_type = port_value.split('x') %}
+                {%- set count = count | int %}
+                {%- set port_type = port_type.strip() %}
+                {%- set cols = 2 %}
+                {%- for i in range(0, count, cols) %}
+        <tr>
+                    {%- for j in range(cols) %}
+                        {%- set port_num = i + j + 1 %}
+                        {%- if port_num <= count %}
+            <td port="{{ port_type.lower().replace(' ', '').replace('-', '') }}_{{ port_num }}"><font point-size="10">{{ port_num }} {{ port_type.upper() }}</font></td>
+                        {%- else %}
+            <td></td>
+                        {%- endif %}
+                    {%- endfor %}
+        </tr>
+                {%- endfor %}
+            {%- else %}
+        <tr><td port="{{ normalize_port_name(port_value) }}" colspan="2"><font point-size="10">{{ port_value }}</font></td></tr>
             {%- endif %}
         {%- endfor %}
         </table>
@@ -46,6 +73,6 @@ digraph G {
 
     // Connections
 {% for connection in connections %}
-    {{ connection.source.upper().replace('-', '_') }}{% if connection.source_port %}:{{ connection.source_port }}{% endif %} -> {{ connection.target.upper().replace('-', '_') }}{% if connection.target_port %}:{{ connection.target_port }}{% endif %} [label = "{{ connection.label }}"; color = {{ connection.color }}; penwidth = 2; fontname = "monospace";{% if connection.is_bidirectional %} dir = none;{% endif %}];
+    {{ connection.source.upper().replace('-', '_') }}{% if connection.source_port %}:{{ connection.source_port }}{% endif %} -> {{ connection.target.upper().replace('-', '_') }}{% if connection.target_port %}:{{ connection.target_port }}{% endif %} [label = "{{ connection.label }}"; color = "{{ connection.color }}"; penwidth = 2; fontname = "monospace";{% if connection.is_bidirectional %} dir = none;{% endif %}];
 {%- endfor %}
 }
