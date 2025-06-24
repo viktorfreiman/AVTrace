@@ -5,7 +5,7 @@ description = "Default template for PDM package"
 authors = [
     {name = "Viktor Freiman", email = "freiman.viktor@gmail.com"},
 ]
-dependencies = ["PyYAML>=6.0.2"]
+dependencies = ["PyYAML>=6.0.2", "jinja2>=3.1.6"]
 requires-python = "==3.12.*"
 readme = "README.md"
 license = {text = "MIT"}

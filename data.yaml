@@ -8,8 +8,7 @@ ubiq-usw-pro-24:
 # always make port to port-1
 
 steam-deck:
- - power: PREM usb-a
-# PERM is that the cable is permanently connected and don't count to cable calculation
+ - power: usb-a
 
 tom-laptop:
   - loc: /foh/
@@ -30,5 +29,4 @@ headphones:
 
 connection: >
   tom-laptop:usb-a -> steam-deck
-  tom-laptop -> headphones
-  tom-laptop -> steam-deck
+  tom-laptop:port_3_5mm_audio -> headphones

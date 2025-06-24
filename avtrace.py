@@ -1,12 +1,157 @@
 from yaml import safe_load
 from pathlib import Path
-import json
+import re
+from jinja2 import Environment, FileSystemLoader
 
-dfile = Path(__file__).parent / "data.yaml"
-data = safe_load(dfile.read_text(encoding="utf-8"))
+def normalize_port_name(port_name):
+    """Normalize port name to be valid for Graphviz (cannot start with digit)"""
+    normalized = port_name.replace('-', '_').replace(' ', '_').replace('.', '_')
+    # If port name starts with a digit, prefix with 'port_'
+    if normalized and normalized[0].isdigit():
+        normalized = 'port_' + normalized
+    return normalized
 
-conection = data.pop("connection", None)
-if not conection:
-    exit("No connections found in data.yaml")
+def parse_connections(connection_string, devices):
+    """Parse connection string into structured connection data with shorthand support"""
+    connections = []
+    
+    # Clean up the connection string and split by whitespace
+    # Then find -> patterns
+    tokens = connection_string.split()
+    
+    i = 0
+    while i < len(tokens):
+        if i + 2 < len(tokens) and tokens[i + 1] == '->':
+            source_part = tokens[i]
+            target_part = tokens[i + 2]
+            
+            # Extract source device and port
+            if ':' in source_part:
+                source_device, source_port = source_part.split(':', 1)
+                source_port = normalize_port_name(source_port)
+            else:
+                source_device = source_part
+                source_port = None
+            
+            # Extract target device and port  
+            if ':' in target_part:
+                target_device, target_port = target_part.split(':', 1)
+                target_port = normalize_port_name(target_port)
+            else:
+                target_device = target_part
+                target_port = None
+                
+                # SHORTHAND SUPPORT: If no target port specified, use the device's power port
+                if target_device in devices:
+                    target_device_info = devices[target_device]
+                    if 'power' in target_device_info and target_device_info['power'] != 'psu':
+                        # Use the power connection as the target port
+                        power_port = normalize_port_name(target_device_info['power'])
+                        target_port = power_port
+                
+            # Determine connection type and color
+            if source_port and 'usb' in source_port.lower():
+                label = "USB"
+                color = "blue"
+            elif source_port and 'hdmi' in source_port.lower():
+                label = "HDMI"
+                color = "darkgreen"
+            elif source_port and 'ethernet' in source_port.lower():
+                label = "Ethernet"
+                color = "orange"
+            elif target_device == 'headphones' or (target_port and 'audio' in target_port.lower()):
+                label = "Audio"
+                color = "red"
+            else:
+                label = "Connection"
+                color = "black"
+            
+            connections.append({
+                'source': source_device,
+                'source_port': source_port,
+                'target': target_device,
+                'target_port': target_port,
+                'label': label,
+                'color': color
+            })
+            
+            i += 3  # Skip the tokens we just processed
+        else:
+            i += 1
+    
+    return connections
 
-print(json.dumps(data, indent=2, ensure_ascii=False))
+def get_max_cols(device_info):
+    """Calculate maximum columns needed for a device table"""
+    max_cols = 2  # Default minimum
+    
+    # Check for long port names that need more space
+    for key, value in device_info.items():
+        if key.startswith('port-') and isinstance(value, str):
+            if 'x' in value:
+                # For "24x RJ45" format, we want 2 columns for the port table
+                return 2
+        elif key == 'out' and isinstance(value, str):
+            # If output port name is long, increase columns
+            if len(value) > 8:
+                max_cols = 3
+    
+    # Check if any port values are long
+    for key, value in device_info.items():
+        if isinstance(value, str) and len(value) > 10:
+            max_cols = max(max_cols, 3)
+    
+    return max_cols
+
+def process_device_data(devices):
+    """Process device data to make it template-friendly"""
+    processed = {}
+    
+    for device_id, device_list in devices.items():
+        if isinstance(device_list, list):
+            # Convert list format to dict
+            device_dict = {}
+            for item in device_list:
+                if isinstance(item, dict):
+                    device_dict.update(item)
+                else:
+                    # Handle string items
+                    device_dict[f'item_{len(device_dict)}'] = item
+            processed[device_id] = device_dict
+        else:
+            processed[device_id] = device_list
+    
+    return processed
+
+def main():
+    # Load data
+    dfile = Path(__file__).parent / "data.yaml"
+    data = safe_load(dfile.read_text(encoding="utf-8"))
+    
+    # Extract connections
+    connection_string = data.pop("connection", None)
+    if not connection_string:
+        exit("No connections found in data.yaml")
+    
+    # Process devices and connections
+    devices = process_device_data(data)
+    connections = parse_connections(connection_string, devices)
+    
+    # Setup Jinja2 environment
+    env = Environment(loader=FileSystemLoader('.'))
+    env.globals['get_max_cols'] = get_max_cols
+    env.globals['normalize_port_name'] = normalize_port_name
+    template = env.get_template('graphviz_template.j2')
+    
+    # Render the template
+    output = template.render(devices=devices, connections=connections)
+    
+    # Write output
+    output_file = Path(__file__).parent / "generated.gv"
+    output_file.write_text(output, encoding="utf-8")
+    
+    print(f"Generated Graphviz file: {output_file}")
+    print("✓ Successfully converted data.yaml to Graphviz format with shorthand connection support")
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,96 @@
+digraph G {
+    rankdir = LR;
+    node [shape = plaintext; fontname = "monospace";];
+
+
+    UBIQ_USW_PRO_24 [label = <
+        <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
+        <tr><td bgcolor="#FFD700" colspan="2"><font point-size="14"><b>UBIQ USW PRO 24</b></font></td></tr>
+        <tr><td port="C13" colspan="2"><font point-size="10">C13</font></td></tr>
+        <tr>
+            <td port="rj45_1"><font point-size="10">1 RJ45</font></td>
+            <td port="rj45_2"><font point-size="10">2 RJ45</font></td>
+        </tr>
+        <tr>
+            <td port="rj45_3"><font point-size="10">3 RJ45</font></td>
+            <td port="rj45_4"><font point-size="10">4 RJ45</font></td>
+        </tr>
+        <tr>
+            <td port="rj45_5"><font point-size="10">5 RJ45</font></td>
+            <td port="rj45_6"><font point-size="10">6 RJ45</font></td>
+        </tr>
+        <tr>
+            <td port="rj45_7"><font point-size="10">7 RJ45</font></td>
+            <td port="rj45_8"><font point-size="10">8 RJ45</font></td>
+        </tr>
+        <tr>
+            <td port="rj45_9"><font point-size="10">9 RJ45</font></td>
+            <td port="rj45_10"><font point-size="10">10 RJ45</font></td>
+        </tr>
+        <tr>
+            <td port="rj45_11"><font point-size="10">11 RJ45</font></td>
+            <td port="rj45_12"><font point-size="10">12 RJ45</font></td>
+        </tr>
+        <tr>
+            <td port="rj45_13"><font point-size="10">13 RJ45</font></td>
+            <td port="rj45_14"><font point-size="10">14 RJ45</font></td>
+        </tr>
+        <tr>
+            <td port="rj45_15"><font point-size="10">15 RJ45</font></td>
+            <td port="rj45_16"><font point-size="10">16 RJ45</font></td>
+        </tr>
+        <tr>
+            <td port="rj45_17"><font point-size="10">17 RJ45</font></td>
+            <td port="rj45_18"><font point-size="10">18 RJ45</font></td>
+        </tr>
+        <tr>
+            <td port="rj45_19"><font point-size="10">19 RJ45</font></td>
+            <td port="rj45_20"><font point-size="10">20 RJ45</font></td>
+        </tr>
+        <tr>
+            <td port="rj45_21"><font point-size="10">21 RJ45</font></td>
+            <td port="rj45_22"><font point-size="10">22 RJ45</font></td>
+        </tr>
+        <tr>
+            <td port="rj45_23"><font point-size="10">23 RJ45</font></td>
+            <td port="rj45_24"><font point-size="10">24 RJ45</font></td>
+        </tr>
+        <tr>
+            <td port="sfp+_1"><font point-size="10">1 SFP+</font></td>
+            <td port="sfp+_2"><font point-size="10">2 SFP+</font></td>
+        </tr>
+        </table>
+        >;];
+
+    STEAM_DECK [label = <
+        <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
+        <tr><td bgcolor="#FFD700" colspan="2"><font point-size="14"><b>STEAM DECK</b></font></td></tr>
+        <tr><td port="usb_a" colspan="2"><font point-size="10">usb-a</font></td></tr>
+        </table>
+        >;];
+
+    TOM_LAPTOP [label = <
+        <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
+        <tr><td bgcolor="#FFD700" colspan="3"><font point-size="14"><b>TOM LAPTOP</b></font></td></tr>
+        <tr><td port="usb_a" colspan="3"><font point-size="10">usb-a</font></td></tr>
+        <tr><td port="usb_c" colspan="3"><font point-size="10">usb-c</font></td></tr>
+        <tr><td port="hdmi" colspan="3"><font point-size="10">hdmi</font></td></tr>
+        <tr><td port="ethernet" colspan="3"><font point-size="10">ethernet</font></td></tr>
+        <tr><td port="displayport" colspan="3"><font point-size="10">displayport</font></td></tr>
+        <tr><td port="port_3_5mm_audio" colspan="3"><font point-size="10">3.5mm audio</font></td></tr>
+        </table>
+        >;];
+
+    HEADPHONES [label = <
+        <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
+        <tr><td bgcolor="#FFD700" colspan="3"><font point-size="14"><b>HEADPHONES</b></font></td></tr>
+        <tr><td port="port_3_5mm_audio" colspan="3"><font point-size="10">3.5mm audio</font></td></tr>
+        </table>
+        >;];
+
+
+    // Connections
+
+    TOM_LAPTOP:usb_a -> STEAM_DECK:usb_a [label = "USB"; color = blue; penwidth = 2; fontname = "monospace";];
+    TOM_LAPTOP:port_3_5mm_audio -> HEADPHONES:port_3_5mm_audio [label = "Audio"; color = red; penwidth = 2; fontname = "monospace";];
+}
