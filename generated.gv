@@ -190,9 +190,9 @@ digraph G {
     TOM_LAPTOP:out_port_3_5mm_audio -> HEADPHONES:in_port_3_5mm_audio [label = "Audio"; color = "#A21E7D"; penwidth = 2; fontname = "monospace";];
     PP1_LAPTOP:out_hdmi -> BIDI_SDI_HDMI_1:in_hdmi [label = "HDMI"; color = "#8E44AD"; penwidth = 2; fontname = "monospace";];
     BIDI_SDI_HDMI_1:out_sdi -> NYHEM_SARGE:in_sdi [label = "SDI"; color = "#00FF00"; penwidth = 2; fontname = "monospace";];
-    UBIQ_USW_PRO_24:eth -> TOM_LAPTOP:eth [label = "ETH"; color = "#E67E22"; penwidth = 2; fontname = "monospace";];
-    UBIQ_USW_PRO_24:eth -> PP1_LAPTOP:eth [label = "ETH"; color = "#E67E22"; penwidth = 2; fontname = "monospace";];
+    UBIQ_USW_PRO_24:eth_1 -> TOM_LAPTOP:eth [label = "ETH"; color = "#E67E22"; penwidth = 2; fontname = "monospace"; dir = none;];
+    UBIQ_USW_PRO_24:eth_2 -> PP1_LAPTOP:eth [label = "ETH"; color = "#E67E22"; penwidth = 2; fontname = "monospace"; dir = none;];
     PP1_LAPTOP:out_usb_a -> DANTE_USB:in_usb_a [label = "USB"; color = "#0074D9"; penwidth = 2; fontname = "monospace";];
-    DANTE_USB:out_RJ45 -> POE_INJECTOR_1:in_RJ45 [label = "RJ45"; color = "#4D4D4D"; penwidth = 2; fontname = "monospace";];
-    POE_INJECTOR_1:out_RJ45 -> GS105:RJ45 [label = "RJ45"; color = "#4D4D4D"; penwidth = 2; fontname = "monospace";];
+    DANTE_USB:out_RJ45 -> POE_INJECTOR_1:in_RJ45 [label = "RJ45"; color = "#4D4D4D"; penwidth = 2; fontname = "monospace"; dir = none;];
+    POE_INJECTOR_1:out_RJ45 -> GS105:rj45_1 [label = "RJ45"; color = "#4D4D4D"; penwidth = 2; fontname = "monospace"; dir = none;];
 }
